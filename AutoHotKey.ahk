@@ -38,6 +38,14 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Include Windows\Transparency.ahk
 #Include Windows\WinMover.ahk
 
+#Include Work\WorkHelperFunctions.ahk
+
+
+;**** Timers ******************************************************************
+
+SetTimer, TimedCapture, 900000 ; updates every 15 minute
+
+
 ;**** Hot Keys ****************************************************************
 
 <^<!x::Run www.google.com
@@ -45,7 +53,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 <^<!g::Run https://mail.google.com
 <^<!c::Run C:\Windows\System32\SnippingTool.exe
 <^<!n::OpenNotepad()
-<^<!space::Send {Volume_Mute}
+<^<!Space::Send {Volume_Mute}
+<^<!PgUp::Send {Volume_Up}
+<^<!PgDn::Send {Volume_Down}
+#PrintScreen::CaptureScreen()
 
 
 ;**** AutoHotkey Dev/Help *****************************************************
@@ -53,6 +64,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 <^<!s::Run %A_ScriptDir%
 <^<!h::Run Notepad++.exe AutoHotkey.ahk
 <^<!+h::OpenAutoHotKeyHelp()
+<^<+`::OpenWindowSpy()
 <^<!r::Reload
 
 
@@ -75,3 +87,35 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 <^<!,::ListOutCurrentWindows()
 <!t::AutoHideTaskBar()
 <!<+t::ToggleAutoHideTaskBar()
+
+
+;**** Mouse Captures **********************************************************
+
+<^<+LButton::CaptureMouse(true)
+<^<!LButton::CaptureMouse(false)
+
+
+;**** Work HotKeys ************************************************************
+
+<^<!o::OpenOutlook(false)
+<^<!<+o::OpenOutlook(true)
+
+; web access
+<^<!d:: Run http://guru/
+<^<!b:: Run http://brainbow.epic.com/
+<^<!f:: Run http://codesearch.epic.com/.NET/SearchModules/Server/
+<^<!<+f:: Run http://codesearch.epic.com/.NET/SearchModules/Client/
+
+::^lookitt::d {^}{%}ZeW
+::^breeze::d {^}{%}ZMSP 
+::d ^^::d {^}EAVIEWID
+::cache::Caché
+<^<+Left:: Send #{Left}
+<^<+Right:: Send #{Right}
+
+
+;**** Timer Callbacks *********************************************************
+TimedCapture:
+	CaptureScreen()
+Return
+

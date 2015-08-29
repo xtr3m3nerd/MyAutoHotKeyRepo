@@ -32,7 +32,9 @@
 SendMode Input  ; Recommended for new scripts for speed and reliability 
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-;**** Includes ****************************************************************
+;**** Globals *****************************************************************
+
+current_hWnd := false
 
 
 ;**** Functions ***************************************************************
@@ -94,14 +96,32 @@ IncreaseTransparency()
 
 MakeClickThroughable()
 {
-	WinGet, currentWindow, ID, A
-	WinSet, ExStyle, +0x80020, ahk_id %currentWindow%
+	Global current_hWnd
+	if !current_hWnd
+	{
+		current_hWnd := winActive("A")
+		Winset, Alwaysontop, ON
+		WinSet, ExStyle, +0x80020
+		
+		SplashImage,, w300 x0 y0 b fs12
+			, Active window is now click through-able
+		SetTimer, TurnOffSI, 1000, On
+	}	
 }
 
 MakeClickable()
 {
-	MouseGetPos,,, MouseWin ; Gets the unique ID of the window under the mouse
-	WinSet, ExStyle, -0x80020, ahk_id %currentWindow%
+	Global current_hWnd
+	if(current_hWnd)
+	{
+		WinSet, ExStyle, -0x80020, ahk_id %current_hWnd%
+		Winset, Alwaysontop, OFF, ahk_id %current_hWnd%
+		current_hWnd := False
+		
+		SplashImage,, w300 x0 y0 b fs12
+			, Click-through window has been restored
+		SetTimer, TurnOffSI, 1000, On
+	}	
 }
 
 TurnOffSI:

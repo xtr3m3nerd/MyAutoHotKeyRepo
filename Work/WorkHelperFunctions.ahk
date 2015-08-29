@@ -15,8 +15,7 @@
 ;      file 'LICENSE.txt', which is part of this source code package.
 ;
 ;
-;		Functionality: Functions to wrap simple key functionality to keep key 
-;        references down to one line for ease of readability and configuration. 
+;		Functionality: Common scripts to support functionality I use at work
 ;
 ;
 ;******************************************************************************
@@ -33,79 +32,73 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;**** Includes ****************************************************************
 
-;#Include Windows\ScreenCap.ahk
-#Include Lib\Gdip.ahk
 
 
 ;**** Functions ***************************************************************
 
-; function to open notepad if a fresh instance isn't open yet. 
-OpenNotepad()
+OpenOutlook(bCalender)
 {
-	IfWinExist Untitled - Notepad
+	IfWinExist - Outlook
 		WinActivate
 	else
-		Run Notepad
-}
-
-; function to AutoHotKey help if a fresh instance isn't open yet. 
-OpenAutoHotKeyHelp()
-{
-	IfWinExist AutoHotkey Help
-		WinActivate
-	else
-		Run C:\Program Files (x86)\AutoHotkey\AutoHotkey.chm
-}
-
-; Opens Windows Spy Utility for AutoHotKey
-OpenWindowSpy()
-{
-	IfWinExist Window Spy
-		WinActivate
-	else
-		Run, C:\Program Files (x86)\AutoHotkey\AU3_Spy.exe
-}
-
-; Captures and reports the current Mouse coordinates relative to screen
-CaptureMouse(bScreen)
-{
-	if(bScreen)
 	{
-		CoordMode, Mouse, Screen
+		Run C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013\Outlook 2013
+		Sleep 3000
+	}
+	WinGetPos,,, Width, Height, A
+	y := Height - 50
+	if (bCalender)
+	{
+		Click  140, %y%
 	}else{
-		CoordMode, Mouse, Relative
+		Click  50, %y%
 	}
-	MouseGetPos, X, Y
-	clipboard = %X%, %Y%
-	ToolTip, X = %X%`n Y = %Y%.
-	Sleep 2000
-	ToolTip
 }
 
-
-
-CaptureScreen() 
+OpenOnenote()
 {
-	if( A_TimeIdlePhysical > 600000)
-		Return
-		
-	 ; Create folder
-	FormatTime, thedate, , dd_MM_yyyy
-	IfNotExist, %thedate%
-	{
-		FileCreateDir, %thedate%
-	}
-
-	; Generate fileName 
-	FormatTime, currentTime, , HH_mm
-	newFileName := thedate "\img_" currentTime ".jpg"
-
-	;Capture screenshot
-	pToken := Gdip_Startup()
-
-	pBitmap := Gdip_BitmapFromScreen()
-	Gdip_SaveBitmapToFile(pBitmap, newFileName, 25)
-	Gdip_DisposeImage(pBitmap)
-
-	Gdip_Shutdown(pToken)
+	IfWinExist - OneNote
+		WinActivate
+	else
+		Run C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013\OneNote 2013
 }
+
+; NextWinTitle(Title)
+; {
+	; WinGet, var, Count, %Title%
+	; if(var > 1)
+	; {			
+		; WinGet, fensterID, List, %Title%
+		; WinActivate, % "ahk_id " fensterID%var%
+	; }
+; }
+
+; PrevWinTitle(Title)
+; {
+	; WinGet, var, Count, %Title%
+	; if(var > 1)
+	; {			
+		; WinGet, fensterID, List, %Title%
+		; WinActivate, % "ahk_id " fensterID2
+	; }
+; }
+
+; WindowType()
+; {
+	; WinGetTitle, Title, A
+	; IdentText =  %A_Space%-%A_Space% 
+	; StringGetPos, pos, Title, %IdentText%, R
+	; StringTrimLeft, winType, Title, pos
+	; return winType
+; }
+
+; ^!.::
+	; thisWinType := WindowType()
+	; NextWinTitle(thisWinType)
+; Return
+
+; ^!,::
+	; thisWinType := WindowType()
+	; PrevWinTitle(thisWinType)
+; Return
+
