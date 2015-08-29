@@ -15,7 +15,8 @@
 ;      file 'LICENSE.txt', which is part of this source code package.
 ;
 ;
-;		Functionality: Starting script with mapped keys and library references
+;		Functionality: Functions to wrap simple key functionality to keep key 
+;        references down to one line for ease of readability and configuration. 
 ;
 ;
 ;******************************************************************************
@@ -24,54 +25,31 @@
 ; Special Character Reference
 ; ¢¤¥¦§©ª«®µ¶
 
-
 ;**** Directives & Settings ***************************************************
 
 #NoEnv  ; Recommended for compatibility with future AutoHotkey releases.
-#SingleInstance force ; Reset this instance ever restart
 SendMode Input  ; Recommended for new scripts for speed and reliability 
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;**** Includes ****************************************************************
 
-#Include Base\HelperFunctions.ahk
-#Include Windows\Transparency.ahk
-#Include Windows\WinMover.ahk
 
-;**** Hot Keys ****************************************************************
+;**** Functions ***************************************************************
 
-<^<!x::Run www.google.com
-<^<!y::Run https://mail.yahoo.com
-<^<!g::Run https://mail.google.com
-<^<!c::Run C:\Windows\System32\SnippingTool.exe
-<^<!n::OpenNotepad()
-<^<!space::Send {Volume_Mute}
+; function to open notepad if a fresh instance isn't open yet. 
+OpenNotepad()
+{
+	IfWinExist Untitled - Notepad
+		WinActivate
+	else
+		Run Notepad
+}
 
-
-;**** AutoHotkey Dev/Help *****************************************************
-
-<^<!s::Run %A_ScriptDir%
-<^<!h::Run Notepad++.exe AutoHotkey.ahk
-<^<!+h::OpenAutoHotKeyHelp()
-<^<!r::Reload
-
-
-;**** Window Transparency *****************************************************
-
-<!a::ToggleAlwaysOnTop()
-<!q::ReduceTranparency()
-<!w::IncreaseTransparency()
-<!<+r::MakeClickThroughable()
-<!<+f::MakeClickable()
-
-
-;**** Window Manipulation *****************************************************
-
-<^<!Up::MoveWindowUp()
-<^<!Left::MoveWindowLeft()
-<^<!Down::MoveWindowDown()
-<^<!Right::MoveWindowRight()
-<^<!/::HalfCurrentWindow()
-<^<!,::ListOutCurrentWindows()
-<!t::AutoHideTaskBar()
-<!<+t::ToggleAutoHideTaskBar()
+; function to autohotkey help if a fresh instance isn't open yet. 
+OpenAutoHotKeyHelp()
+{
+	IfWinExist AutoHotkey Help
+		WinActivate
+	else
+		Run C:\Program Files (x86)\AutoHotkey\AutoHotkey.chm
+}
