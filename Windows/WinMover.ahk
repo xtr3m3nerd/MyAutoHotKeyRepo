@@ -148,6 +148,18 @@ ListOutCurrentWindows()
 	}
 }
 
+;**** Positional Windows ******************************************************
+
+MoveWindowToPos(position)
+{
+	WinGetTitle, Title, A
+	WinGetPos, Xpos, Ypos, , , A
+	
+	Xcord := A_ScreenWidth/4 * Mod((position-1),4)
+	Ycord := A_ScreenHeight/2 * ((position-1)//4)
+	WinMove,%Title%,,Xcord,Ycord,(A_ScreenWidth/4),(A_ScreenHeight/2)
+}
+
 ;**** TaskBar Manipulation ****************************************************
 
 AutoHideTaskBar()
