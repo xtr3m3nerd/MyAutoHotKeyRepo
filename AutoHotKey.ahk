@@ -1,4 +1,4 @@
-;******************************************************************************
+﻿;******************************************************************************
 ; AutoHotkey Version: 1.1
 ; Language:       English
 ; Author:         Xavier Vargas <Xtr3m3nerd@gmail.com>
@@ -58,6 +58,18 @@ SetTimer, TimedCapture, 900000 ; updates every 15 minute
 <^<!PgDn::Send {Volume_Down}
 #PrintScreen::CaptureScreen()
 
+
+;**** Disable CapsLock  *******************************************************
+
+CapsLock::		; CapsLock
++CapsLock::	; Shift+CapsLock
+!CapsLock::	; Alt+CapsLock
+^CapsLock::		; Ctrl+CapsLock
+#CapsLock::		; Win+CapsLock
+;^!CapsLock::	; Ctrl+Alt+CapsLock
+^!#CapsLock::	; Ctrl+Alt+Win+CapsLock
+;............	; You can add whatever you want to block
+return			; Do nothing, return
 
 ;**** AutoHotkey Dev/Help *****************************************************
 
