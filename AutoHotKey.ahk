@@ -109,6 +109,16 @@ SetTimer, TimedCapture, 900000 ; updates every 15 minute
 <!<+t::ToggleAutoHideTaskBar()
 
 
+<^<!1::MoveWindowToPos(1)
+<^<!2::MoveWindowToPos(2)
+<^<!3::MoveWindowToPos(3)
+<^<!4::MoveWindowToPos(4)
+<^<!5::MoveWindowToPos(5)
+<^<!6::MoveWindowToPos(6)
+<^<!7::MoveWindowToPos(7)
+<^<!8::MoveWindowToPos(8)
+
+
 ;**** Mouse Captures **********************************************************
 
 <^<+LButton::CaptureMouse(true)
@@ -129,6 +139,7 @@ SetTimer, TimedCapture, 900000 ; updates every 15 minute
 ::^lookitt::d {^}{%}ZeW
 ::^breeze::d {^}{%}ZMSP 
 ::d ^^::d {^}EAVIEWID
+;::cache::Caché
 ;::cache::Caché
 <^<+Left:: Send #{Left}
 <^<+Right:: Send #{Right}
