@@ -31,6 +31,7 @@
 #SingleInstance force ; Reset this instance ever restart
 SendMode Input  ; Recommended for new scripts for speed and reliability 
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+SetMouseDelay, -1 ; Remove mouse delay to allow rapid response 
 
 ;**** Includes ****************************************************************
 
@@ -82,11 +83,30 @@ return			; Do nothing, return
 
 ;**** Window Transparency *****************************************************
 
-<!a::ToggleAlwaysOnTop()
-<!q::ReduceTranparency()
-<!w::IncreaseTransparency()
-<!<+r::MakeClickThroughable()
-<!<+f::MakeClickable()
+>!a::ToggleAlwaysOnTop()
+>!q::ReduceTranparency()
+>!w::IncreaseTransparency()
+>!>+r::MakeClickThroughable()
+>!>+f::MakeClickable()
+
+
+;**** Vim Movements ***********************************************************
+
+<!<+k::Send {Up}
+<!<+h::Send {Left}
+<!<+j::Send {Down}
+<!<+l::Send {Right}
+<!<+u::Send {PgUp}
+<!<+d::Send {PgDn}
+
+;**** Vim Mouse Movements *****************************************************
+
+*<^<#k::MouseMove, 0, 30, 1, R
+*<^<#h::MouseMove, -30, 0, 1, R
+*<^<#j::MouseMove, 0, -30, 1, R
+*<^<#l::MouseMove, 30, 0, 1, R
+<^<#Space::Click
+<^<#<+Space::Click right
 
 
 ;**** Window Manipulation *****************************************************
@@ -131,6 +151,8 @@ return			; Do nothing, return
 ::^lookitt::d {^}{%}ZeW
 ::^breeze::d {^}{%}ZMSP 
 ::d ^^::d {^}EAVIEWID
+;::cache::Caché
+;::cache::Caché
 <^<+Left:: Send #{Left}
 <^<+Right:: Send #{Right}
 
