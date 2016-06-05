@@ -38,6 +38,7 @@ SetMouseDelay, -1 ; Remove mouse delay to allow rapid response
 #Include Base\HelperFunctions.ahk
 #Include Windows\Transparency.ahk
 #Include Windows\WinMover.ahk
+#Include Windows\Sounds.ahk
 
 #Include Work\WorkHelperFunctions.ahk
 
@@ -131,6 +132,11 @@ return			; Do nothing, return
 <^<!8::MoveWindowToPos(8)
 
 
+;**** Sound Device ************************************************************
+
+ScrollLock::ToggleSoundDevice(4,5)
+
+
 ;**** Mouse Captures **********************************************************
 
 <^<+LButton::CaptureMouse(true)
@@ -161,4 +167,3 @@ return			; Do nothing, return
 TimedCapture:
 	CaptureScreen()
 Return
-
