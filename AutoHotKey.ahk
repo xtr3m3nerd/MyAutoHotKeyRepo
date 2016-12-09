@@ -148,6 +148,9 @@ ScrollLock::ToggleSoundDevice(4,5)
 <^<!o::OpenOutlook(false)
 <^<!<+o::OpenOutlook(true)
 
+; map network drives
+<^<!m:: Run \\epic.com\netlogon\mapdrive.BAT
+
 ; web access
 <^<!d:: Run http://guru/
 <^<!b:: Run http://brainbow.epic.com/
@@ -167,3 +170,5 @@ ScrollLock::ToggleSoundDevice(4,5)
 TimedCapture:
 	CaptureScreen()
 Return
+
+<^<!t::ShowTime()

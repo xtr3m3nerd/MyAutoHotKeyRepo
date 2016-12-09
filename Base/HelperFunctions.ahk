@@ -109,3 +109,11 @@ CaptureScreen()
 
 	Gdip_Shutdown(pToken)
 }
+
+ShowTime()
+{
+	FormatTime, currentTime
+	Progress, b zh0 fs24, %currentTime%
+	Sleep, 2000
+	Progress, Off
+}
