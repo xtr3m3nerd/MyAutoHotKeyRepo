@@ -2,7 +2,7 @@
 ; AutoHotkey Version: 1.1
 ; Language:       English
 ; Author:         Xavier Vargas <Xtr3m3nerd@gmail.com>
-;                         Copyright(C) 2015
+;                         Copyright(C) 2019
 ;
 ;____  ___ __        ________         ________                         .___
 ;\   \/  //  |_______\_____  \  _____ \_____  \  ____   ___________  __| _/
@@ -41,6 +41,7 @@ SetMouseDelay, -1 ; Remove mouse delay to allow rapid response
 #Include Windows\Sounds.ahk
 
 #Include Work\WorkHelperFunctions.ahk
+#Include Work\kcps-csv-converter.ahk
 
 
 ;**** Timers ******************************************************************
@@ -51,6 +52,10 @@ SetTimer, TimedCapture, 900000 ; updates every 15 minute
 ;**** Hot Keys ****************************************************************
 
 <^<!x::Run www.google.com
+<^<!d::Run https://drive.google.com/
+<^<!f::Run https://docs.google.com/spreadsheets/d/14u7IcIiq9p-CWaZVv3EwM-QjVsSwMC1ZvareDf7doao/edit#gid=607151010
+<^<!v::Run https://docs.google.com/spreadsheets/u/0/
+<^<!b::Run https://docs.google.com/document/u/0/
 <^<!y::Run https://mail.yahoo.com
 <^<!g::Run https://mail.google.com
 <^<!c::Run C:\Windows\System32\SnippingTool.exe
@@ -134,7 +139,7 @@ return			; Do nothing, return
 
 ;**** Sound Device ************************************************************
 
-ScrollLock::ToggleSoundDevice(4,5)
+ScrollLock::ToggleSoundDevice(7,9)
 
 
 ;**** Mouse Captures **********************************************************
@@ -145,25 +150,21 @@ ScrollLock::ToggleSoundDevice(4,5)
 
 ;**** Work HotKeys ************************************************************
 
-<^<!o::OpenOutlook(false)
-<^<!<+o::OpenOutlook(true)
-
-; map network drives
-<^<!m:: Run \\epic.com\netlogon\mapdrive.BAT
-
-; web access
-<^<!d:: Run http://guru/
-<^<!b:: Run http://brainbow.epic.com/
-<^<!f:: Run http://codesearch.epic.com/.NET/SearchModules/Server/
-<^<!<+f:: Run http://codesearch.epic.com/.NET/SearchModules/Client/
-
-::^lookitt::d {^}{%}ZeW
-::^breeze::d {^}{%}ZMSP 
-::d ^^::d {^}EAVIEWID
-;::cache::Caché
-;::cache::Caché
 <^<+Left:: Send #{Left}
 <^<+Right:: Send #{Right}
+
+$#z::
+	Clipboard =
+	SendInput  ^c
+	Sleep 100 ;Allow some time for OnClipboardChange subroutine to run (if the clipboard has changed)
+	If ! Errorlevel
+		Clipboard := Clipboard
+		
+	If FileExist(Clipboard) and RegExMatch(Clipboard, "\.csv$")
+		ConvertKCPSLedger(Clipboard)
+	Else
+		SendInput #z
+return
 
 
 ;**** Timer Callbacks *********************************************************
@@ -172,3 +173,11 @@ TimedCapture:
 Return
 
 <^<!t::ShowTime()
+
+;**** POE Hotkeys *********************************************************
+#IfWinActive ahk_class POEWindowClass
+<^1:: Run Other\POEFlaskMacros.ahk
+<^2:: Run Other\POE-TradeMacro-2.14.1\Run_TradeMacro.ahk
+#IfWinActive
+	
+
